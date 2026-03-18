@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense, lazy } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
-import CodeBlock from './CodeBlock'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+
+const LazyCodeBlock = lazy(() => import('./CodeBlock'));
 
 type Tab = 'python' | 'javascript' | 'cpp' | 'java'
 
@@ -115,7 +116,9 @@ const AlgoDeck: React.FC = () => {
 
           {!loading && !error && (
             <>
-              <CodeBlock language={tab === 'cpp' ? 'cpp' : tab} code={algo?.code?.[tab] ?? ''} />
+              <Suspense fallback={<div className="p-6 text-warm-gray">Loading code...</div>}>
+                <LazyCodeBlock language={tab === 'cpp' ? 'cpp' : tab} code={algo?.code?.[tab] ?? ''} />
+              </Suspense>
 
               {algo?.explanation && (
                 <div className="mt-10 text-left prose prose-slate dark:prose-invert max-w-none">

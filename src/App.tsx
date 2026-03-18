@@ -1,14 +1,18 @@
 import './App.css';
-import AlgoDeck from './components/AlgoDeck';
+import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
+
+const Home = lazy(() => import('./components/Home'));
+const AlgoDeck = lazy(() => import('./components/AlgoDeck'));
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/algodeck/:id" element={<AlgoDeck />} />
-    </Routes>
+    <Suspense fallback={<div className="p-6 text-center">Loading...</div>}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/algodeck/:id" element={<AlgoDeck />} />
+      </Routes>
+    </Suspense>
   );
 }
 

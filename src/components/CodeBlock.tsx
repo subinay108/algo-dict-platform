@@ -1,6 +1,4 @@
-import React, { useState } from 'react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import React, { useState, useEffect } from 'react'
 
 type CodeBlockProps = {
   language?: string
@@ -9,6 +7,23 @@ type CodeBlockProps = {
 
 const CodeBlock: React.FC<CodeBlockProps> = ({ language = 'text', code }) => {
   const [copied, setCopied] = useState(false)
+  const [Highlighter, setHighlighter] = useState<any | null>(null)
+  const [style, setStyle] = useState<any | null>(null)
+
+  useEffect(() => {
+    let mounted = true
+    Promise.all([
+      import('react-syntax-highlighter').then(m => m.Prism),
+      import('react-syntax-highlighter/dist/esm/styles/prism').then(s => s.tomorrow)
+    ]).then(([Prism, tomorrow]) => {
+      if (!mounted) return
+      setHighlighter(() => Prism)
+      setStyle(() => tomorrow)
+    }).catch(() => {
+      // ignore load errors
+    })
+    return () => { mounted = false }
+  }, [])
 
   const handleCopy = async () => {
     try {
@@ -35,18 +50,20 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ language = 'text', code }) => {
 
       <div className="overflow-auto max-h-100 code-scrollbar" style={{ scrollbarColor: 'rgba(236,72,153,0.5) transparent', scrollbarWidth: 'thin' }}>
         <style>{`.code-scrollbar::-webkit-scrollbar{width:10px;height:10px}.code-scrollbar::-webkit-scrollbar-thumb{background:rgba(236,72,153,0.5);border-radius:9999px;border:2px solid transparent;background-clip:padding-box}.code-scrollbar::-webkit-scrollbar-track{background:transparent}`}</style>
-        <SyntaxHighlighter
-          language={language}
-          style={tomorrow}
-          showLineNumbers={true}
-          wrapLongLines={true}
-          customStyle={{ background: 'transparent', padding: 0, margin: 0, display: 'grid' }}
-          lineProps={{
-    style: { display: 'block', width: '100%' }
-  }}
-        >
+        {Highlighter && style ? (
+          <Highlighter
+            language={language}
+            style={style}
+            showLineNumbers={true}
+            wrapLongLines={true}
+            customStyle={{ background: 'transparent', padding: 0, margin: 0, display: 'grid' }}
+            lineProps={{ style: { display: 'block', width: '100%' } }}
+          >
             {code}
-        </SyntaxHighlighter>
+          </Highlighter>
+        ) : (
+          <pre className="text-sm whitespace-pre-wrap">{code}</pre>
+        )}
       </div>
     </div>
   )
