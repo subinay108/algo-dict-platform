@@ -1,0 +1,25 @@
+{
+  "name": "Matrix Chain Multiplication (MCM)",
+  "slug": "matrix-chain-multiplication",
+  "category": "Dynamic Programming",
+  "description": "An optimization problem to find the most efficient way to multiply a sequence of matrices by minimizing the total number of scalar multiplications.",
+  "tags": [
+    "dynamic-programming",
+    "optimization",
+    "matrices",
+    "algorithms"
+  ],
+  "difficulty": "Hard",
+  "time_complexity": {
+    "best": "O(n^3)",
+    "average": "O(n^3)",
+    "worst": "O(n^3)"
+  },
+  "space_complexity": "O(n^2)",
+  "explanation": "## Overview\r\n**Matrix Chain Multiplication** is not about performing the actual multiplication, but about finding the optimal **parenthesization** of a product of `n` matrices. Because matrix multiplication is associative but not commutative, the order in which we group the operations can drastically change the number of required scalar multiplications.\r\n\r\n## Intuition\r\nSuppose you have three matrices: `A` (`10 \\times 100`), `B` (`100 \\times 5`), and `C` (`5 \\times 50`).\r\n* `(AB)C` takes `(10 \\times 100 \\times 5) + (10 \\times 5 \\times 50) = 5,000 + 2,500 = \\mathbf{7,500}` operations.\r\n* `A(BC)` takes `(100 \\times 5 \\times 50) + (10 \\times 100 \\times 50) = 25,000 + 50,000 = \\mathbf{75,000}` operations.\r\n\r\nThe first way is 10 times faster. MCM uses dynamic programming to find this \"cheapest\" path for any number of matrices.\r\n\r\n\r\n\r\n## How It Works\r\nWe use a table `m[n][n]` where `m[i][j]` is the minimum cost to multiply matrices from `i` to `j`.\r\n\r\n1.  **Define Subproblems**: To compute the cost of the chain `M_i \\dots M_j`, we split it at some point `k` (`i \\leq k < j`).\r\n2.  **Recursive Formula**: The cost is the sum of the cost to compute the two sub-chains plus the cost of multiplying the resulting two matrices:\r\n    ``m[i,j] = \\min_{i \\leq k < j} \\{ m[i,k] + m[k+1,j] + p_{i-1}p_kp_j \\}``\r\n    Where `p` is an array of dimensions such that Matrix `i` is `p_{i-1} \\times p_i`.\r\n3.  **Base Case**: The cost to multiply a single matrix is zero: `m[i,i] = 0`.\r\n4.  **Filling Order**: We fill the table based on the length of the chain, starting from length 2 up to `n`.\r\n\r\n\r\n\r\n## Applications\r\n* **Compiler Optimization**: Optimizing the execution of complex mathematical expressions in code.\r\n* **Computer Graphics**: Managing sequences of transformations (rotation, scaling, translation) represented as matrices.\r\n* **Robotics**: Efficiently calculating Kinematics chains.\r\n* **Parallel Computing**: Determining how to distribute matrix operations across multiple processors.\r\n\r\n---",
+  "code": {
+    "cpp": "#include <vector>\r\n#include <climits>\r\n\r\nint matrixChainOrder(std::vector<int>& p) {\r\n    int n = p.size() - 1;\r\n    std::vector<std::vector<int>> m(n + 1, std::vector<int>(n + 1, 0));\r\n\r\n    for (int len = 2; len <= n; len++) {\r\n        for (int i = 1; i <= n - len + 1; i++) {\r\n            int j = i + len - 1;\r\n            m[i][j] = INT_MAX;\r\n            for (int k = i; k <= j - 1; k++) {\r\n                int q = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j];\r\n                if (q < m[i][j]) m[i][j] = q;\r\n            }\r\n        }\r\n    }\r\n    return m[1][n];\r\n}",
+    "python": "def matrix_chain_order(p):\r\n    n = len(p) - 1\r\n    m = [[0 for _ in range(n + 1)] for _ in range(n + 1)]\r\n\r\n    # len is the chain length\r\n    for length in range(2, n + 1):\r\n        for i in range(1, n - length + 2):\r\n            j = i + length - 1\r\n            m[i][j] = float('inf')\r\n            for k in range(i, j):\r\n                cost = m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j]\r\n                if cost < m[i][j]:\r\n                    m[i][j] = cost\r\n                    \r\n    return m[1][n]",
+    "java": "public class MatrixChain {\r\n    public static int solve(int[] p) {\r\n        int n = p.length - 1;\r\n        int[][] m = new int[n + 1][n + 1];\r\n\r\n        for (int len = 2; len <= n; len++) {\r\n            for (int i = 1; i <= n - len + 1; i++) {\r\n                int j = i + len - 1;\r\n                m[i][j] = Integer.MAX_VALUE;\r\n                for (int k = i; k <= j - 1; k++) {\r\n                    int q = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j];\r\n                    if (q < m[i][j]) m[i][j] = q;\r\n                }\r\n            }\r\n        }\r\n        return m[1][n];\r\n    }\r\n}"
+  }
+}

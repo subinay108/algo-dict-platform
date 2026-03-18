@@ -1,0 +1,398 @@
+[
+  {
+    "name": "0/1 Knapsack Problem",
+    "slug": "0-1-knapsack-problem",
+    "category": "Dynamic Programming",
+    "tags": [
+      "dynamic-programming",
+      "optimization",
+      "combinatorics",
+      "np-hard"
+    ]
+  },
+  {
+    "name": "A* Search Algorithm",
+    "slug": "a-star-search-algorithm",
+    "category": "Pathfinding",
+    "tags": [
+      "graph",
+      "pathfinding",
+      "heuristic",
+      "greedy",
+      "bfs"
+    ]
+  },
+  {
+    "name": "Adaptive Simpson's Method",
+    "slug": "adaptive-simpsons-integration",
+    "category": "Numerical Analysis",
+    "tags": [
+      "calculus",
+      "integration",
+      "numerical-methods",
+      "recursion"
+    ]
+  },
+  {
+    "name": "Adler-32 Checksum",
+    "slug": "adler-32-checksum",
+    "category": "Hashing",
+    "tags": [
+      "checksum",
+      "hashing",
+      "zlib",
+      "reliability"
+    ]
+  },
+  {
+    "name": "Affine Cipher",
+    "slug": "affine-cipher",
+    "category": "Cryptography",
+    "tags": [
+      "security",
+      "encryption",
+      "modular-arithmetic",
+      "classical-cipher"
+    ]
+  },
+  {
+    "name": "Arithmetic Coding",
+    "slug": "arithmetic-coding",
+    "category": "Compression",
+    "tags": [
+      "data-compression",
+      "entropy",
+      "lossless",
+      "encoding"
+    ]
+  },
+  {
+    "name": "Baker's Algorithm",
+    "slug": "bakers-algorithm",
+    "category": "Memory Management",
+    "tags": [
+      "garbage-collection",
+      "memory-management",
+      "real-time",
+      "systems"
+    ]
+  },
+  {
+    "name": "Bellman-Ford Algorithm",
+    "slug": "bellman-ford-algorithm",
+    "category": "Graph Theory",
+    "tags": [
+      "graph",
+      "shortest-path",
+      "dynamic-programming",
+      "negative-weights"
+    ]
+  },
+  {
+    "name": "Binary Exponentiation",
+    "slug": "binary-exponentiation",
+    "category": "Mathematics",
+    "tags": [
+      "math",
+      "recursion",
+      "optimization",
+      "number-theory"
+    ]
+  },
+  {
+    "name": "Binary Search",
+    "slug": "binary-search",
+    "category": "Searching",
+    "tags": [
+      "array",
+      "divide-and-conquer",
+      "logn"
+    ]
+  },
+  {
+    "name": "Breadth-First Search (BFS)",
+    "slug": "breadth-first-search",
+    "category": "Graph Theory",
+    "tags": [
+      "graph",
+      "traversal",
+      "search",
+      "queue",
+      "connectivity"
+    ]
+  },
+  {
+    "name": "Bubble Sort",
+    "slug": "bubble-sort",
+    "category": "Sorting Algorithms",
+    "tags": [
+      "sorting",
+      "comparison",
+      "brute-force",
+      "stable"
+    ]
+  },
+  {
+    "name": "Counting Sort",
+    "slug": "counting-sort",
+    "category": "Sorting Algorithms",
+    "tags": [
+      "sorting",
+      "non-comparison",
+      "integer-sort",
+      "linear-time"
+    ]
+  },
+  {
+    "name": "Depth-First Search (DFS)",
+    "slug": "depth-first-search",
+    "category": "Graph Theory",
+    "tags": [
+      "graph",
+      "traversal",
+      "recursion",
+      "stack",
+      "connectivity"
+    ]
+  },
+  {
+    "name": "Dijkstra’s Algorithm",
+    "slug": "dijkstras-algorithm",
+    "category": "Graph Theory",
+    "tags": [
+      "graph",
+      "shortest-path",
+      "greedy",
+      "priority-queue"
+    ]
+  },
+  {
+    "name": "Dinic's Algorithm",
+    "slug": "dinics-algorithm",
+    "category": "Graph Theory",
+    "tags": [
+      "graph",
+      "max-flow",
+      "network-flow",
+      "level-graph",
+      "blocking-flow"
+    ]
+  },
+  {
+    "name": "Euclidean Algorithm",
+    "slug": "euclidean-algorithm",
+    "category": "Mathematics",
+    "tags": [
+      "math",
+      "recursion",
+      "number-theory",
+      "gcd"
+    ]
+  },
+  {
+    "name": "Floyd-Warshall Algorithm",
+    "slug": "floyd-warshall-algorithm",
+    "category": "Graph Theory",
+    "tags": [
+      "graph",
+      "dynamic-programming",
+      "shortest-path",
+      "matrix"
+    ]
+  },
+  {
+    "name": "Ford-Fulkerson Algorithm",
+    "slug": "ford-fulkerson-algorithm",
+    "category": "Graph Theory",
+    "tags": [
+      "graph",
+      "max-flow",
+      "network-flow",
+      "greedy",
+      "residual-graph"
+    ]
+  },
+  {
+    "name": "Genetic Algorithm",
+    "slug": "genetic-algorithm",
+    "category": "Artificial Intelligence",
+    "tags": [
+      "optimization",
+      "evolution",
+      "metaheuristic",
+      "search-algorithm"
+    ]
+  },
+  {
+    "name": "Gnome Sort",
+    "slug": "gnome-sort",
+    "category": "Sorting Algorithms",
+    "tags": [
+      "sorting",
+      "exchange-sort",
+      "comparison",
+      "stable"
+    ]
+  },
+  {
+    "name": "Graham Scan",
+    "slug": "graham-scan",
+    "category": "Computational Geometry",
+    "tags": [
+      "geometry",
+      "convex-hull",
+      "stack",
+      "sorting"
+    ]
+  },
+  {
+    "name": "Heap Sort",
+    "slug": "heap-sort",
+    "category": "Sorting Algorithms",
+    "tags": [
+      "sorting",
+      "heap",
+      "comparison",
+      "in-place",
+      "selection-sort"
+    ]
+  },
+  {
+    "name": "Hierholzer's Algorithm (Eulerian Path)",
+    "slug": "eulerian-path-algorithm",
+    "category": "Graph Theory",
+    "tags": [
+      "graph",
+      "traversal",
+      "eulerian",
+      "hierholzer",
+      "cycle"
+    ]
+  },
+  {
+    "name": "Huffman Coding",
+    "slug": "huffman-coding",
+    "category": "Compression",
+    "tags": [
+      "compression",
+      "greedy",
+      "tree",
+      "prefix-code",
+      "lossless"
+    ]
+  },
+  {
+    "name": "Insertion Sort",
+    "slug": "insertion-sort",
+    "category": "Sorting Algorithms",
+    "tags": [
+      "sorting",
+      "comparison",
+      "in-place",
+      "stable",
+      "online"
+    ]
+  },
+  {
+    "name": "Johnson’s Algorithm",
+    "slug": "johnsons-algorithm",
+    "category": "Graph Theory",
+    "tags": [
+      "graph",
+      "shortest-path",
+      "bellman-ford",
+      "dijkstra",
+      "reweighting"
+    ]
+  },
+  {
+    "name": "Jump Search",
+    "slug": "jump-search",
+    "category": "Searching Algorithms",
+    "tags": [
+      "search",
+      "sorted-array",
+      "square-root",
+      "linear-search"
+    ]
+  },
+  {
+    "name": "Kadane’s Algorithm",
+    "slug": "kadanes-algorithm",
+    "category": "Dynamic Programming",
+    "tags": [
+      "array",
+      "dynamic-programming",
+      "optimization",
+      "maximum-subarray"
+    ]
+  },
+  {
+    "name": "Knuth-Morris-Pratt (KMP) Algorithm",
+    "slug": "kmp-string-matching",
+    "category": "String Algorithms",
+    "tags": [
+      "string",
+      "pattern-matching",
+      "searching",
+      "complexity-optimization"
+    ]
+  },
+  {
+    "name": "Kosaraju’s Algorithm",
+    "slug": "kosarajus-algorithm",
+    "category": "Graph Theory",
+    "tags": [
+      "graph",
+      "scc",
+      "dfs",
+      "connectivity",
+      "directed-graph"
+    ]
+  },
+  {
+    "name": "Kruskal’s Algorithm",
+    "slug": "kruskals-algorithm",
+    "category": "Graph Theory",
+    "tags": [
+      "graph",
+      "mst",
+      "greedy",
+      "union-find",
+      "disjoint-set"
+    ]
+  },
+  {
+    "name": "Linear Search",
+    "slug": "linear-search",
+    "category": "Searching Algorithms",
+    "tags": [
+      "search",
+      "sequential",
+      "brute-force",
+      "array"
+    ]
+  },
+  {
+    "name": "Longest Common Subsequence (LCS)",
+    "slug": "longest-common-subsequence",
+    "category": "Dynamic Programming",
+    "tags": [
+      "dynamic-programming",
+      "strings",
+      "optimization",
+      "bioinformatics"
+    ]
+  },
+  {
+    "name": "Matrix Chain Multiplication (MCM)",
+    "slug": "matrix-chain-multiplication",
+    "category": "Dynamic Programming",
+    "tags": [
+      "dynamic-programming",
+      "optimization",
+      "matrices",
+      "algorithms"
+    ]
+  }
+]

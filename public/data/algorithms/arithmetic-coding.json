@@ -1,0 +1,26 @@
+{
+  "name": "Arithmetic Coding",
+  "slug": "arithmetic-coding",
+  "category": "Compression",
+  "description": "A form of entropy encoding that represents an entire message as a single floating-point number between 0 and 1.",
+  "tags": [
+    "data-compression",
+    "entropy",
+    "lossless",
+    "encoding"
+  ],
+  "difficulty": "Hard",
+  "time_complexity": {
+    "best": "O(n)",
+    "average": "O(n)",
+    "worst": "O(n)"
+  },
+  "space_complexity": "O(1)",
+  "explanation": "## Overview\r\n**Arithmetic Coding** is a highly efficient lossless data compression technique. Unlike Huffman coding, which assigns a fixed-length bit string to each symbol, Arithmetic Coding maps an entire message into a single number within a sub-interval of `[0, 1)`. It can achieve compression rates very close to the theoretical entropy limit because it can represent symbols using fractional bits.\r\n\r\n## Intuition\r\nImagine the interval from 0 to 1 as a stretchable rubber band. Every character in your alphabet is assigned a portion of that band based on its probability. As you read each character in a message, you \"zoom in\" on its specific portion of the band, treating that new smaller segment as your full 0-to-1 range for the next character. By the end, any single number inside your final, tiny interval uniquely identifies the entire sequence of characters.\r\n\r\n\r\n\r\n## How It Works\r\n1.  **Probability Table**: Assign a probability range to each symbol based on its frequency. For example, if 'A' has a 50% chance, it takes `[0, 0.5)`.\r\n2.  **Initialize**: Start with a current interval `[L, H)`, initially `[0, 1)`.\r\n3.  **Encode**: For each symbol in the message:\r\n    * Calculate the new range size: `Range = H - L`.\r\n    * Update `H` to: `L + Range \\times \\text{Upper\\_Bound}(\\text{symbol})`.\r\n    * Update `L` to: `L + Range \\times \\text{Lower\\_Bound}(\\text{symbol})`.\r\n4.  **Final Value**: Once the message ends, pick any value (usually the shortest decimal) within the final `[L, H)` to represent the message.\r\n5.  **Decode**: Reverse the process by checking which symbol's range contains the current value, outputting it, and scaling the interval back up.\r\n\r\n## Applications\r\n* **Modern Compression Standards**: Used in JPEG 2000, H.264/AVC, and H.265/HEVC (CABAC).\r\n* **Text Compression**: Effective for large documents with predictable character distributions.\r\n* **Academic Research**: Serves as the benchmark for optimal entropy encoding.\r\n\r\n---",
+  "code": {
+    "cpp": "#include <iostream>\r\n#include <vector>\r\n#include <map>\r\n\r\nstruct Range { double low, high; };\r\n\r\ndouble encode(const std::string& text, std::map<char, Range>& table) {\r\n    double low = 0.0, high = 1.0;\r\n    for (char c : text) {\r\n        double range = high - low;\r\n        high = low + range * table[c].high;\r\n        low = low + range * table[c].low;\r\n    }\r\n    return low; // Return the lower bound of the final interval\r\n}",
+    "python": "def arithmetic_encode(text, probability_table):\r\n    low = 0.0\r\n    high = 1.0\r\n    \r\n    for char in text:\r\n        prob_low, prob_high = probability_table[char]\r\n        current_range = high - low\r\n        high = low + current_range * prob_high\r\n        low = low + current_range * prob_low\r\n        \r\n    return (low + high) / 2\r\n\r\n# Example table: {'a': (0.0, 0.5), 'b': (0.5, 1.0)}",
+    "javascript": "function arithmeticEncode(text, table) {\r\n    let low = 0.0;\r\n    let high = 1.0;\r\n\r\n    for (let char of text) {\r\n        let range = high - low;\r\n        let [pLow, pHigh] = table[char];\r\n        high = low + range * pHigh;\r\n        low = low + range * pLow;\r\n    }\r\n\r\n    return (low + high) / 2;\r\n}\r\n\r\n// table example: { 'A': [0, 0.6], 'B': [0.6, 1.0] }",
+    "java": "import java.util.Map;\r\n\r\npublic class ArithmeticCoding {\r\n    public static double encode(String text, Map<Character, double[]> table) {\r\n        double low = 0.0;\r\n        double high = 1.0;\r\n\r\n        for (char c : text.toCharArray()) {\r\n            double range = high - low;\r\n            double[] bounds = table.get(c);\r\n            high = low + range * bounds[1];\r\n            low = low + range * bounds[0];\r\n        }\r\n        return (low + high) / 2.0;\r\n    }\r\n}"
+  }
+}

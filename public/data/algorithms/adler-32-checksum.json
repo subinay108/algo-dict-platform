@@ -1,0 +1,26 @@
+{
+  "name": "Adler-32 Checksum",
+  "slug": "adler-32-checksum",
+  "category": "Hashing",
+  "description": "A high-speed checksum algorithm that uses two 16-bit sums to verify data integrity.",
+  "tags": [
+    "checksum",
+    "hashing",
+    "zlib",
+    "reliability"
+  ],
+  "difficulty": "Easy",
+  "time_complexity": {
+    "best": "O(n)",
+    "average": "O(n)",
+    "worst": "O(n)"
+  },
+  "space_complexity": "O(1)",
+  "explanation": "## Overview\r\nAdler-32 is a checksum algorithm invented by Mark Adler in 1995. It is a refinement of the Fletcher checksum and is primarily used in the **zlib** compression library. While it is significantly faster than a Cyclic Redundancy Check (CRC32), it trades off some reliability on very short messages because it does not distribute bits as evenly.\r\n\r\n## Intuition\r\nImagine you have a string of numbers. To make sure nothing changes during a transfer, you could just add them all up. However, \"1+2\" and \"2+1\" both equal 3, so a simple sum won't catch swapped characters. Adler-32 solves this by keeping a **running total of the sums**. By tracking how the sum grows over time, the position of each byte impacts the final result, making it much harder for errors to go unnoticed.\r\n\r\n\r\n\r\n## How It Works\r\nAdler-32 concatenates two 16-bit checksums, `A` and `B`, into a single 32-bit value.\r\n\r\n1.  **Initialize**: Set `A = 1` and `B = 0`.\r\n2.  **Iterate**: For each byte `D` in the data stream:\r\n    * `A = (A + D) \\pmod{65521}`\r\n    * `B = (B + A) \\pmod{65521}`\r\n3.  **Combine**: The final 32-bit hash is `B \\times 65536 + A` (or `B \\ll 16 \\ | \\ A`).\r\n4.  **Modulo**: The number **65521** is used because it is the largest prime number smaller than `2^{16}`, which helps maximize the distribution of the checksum values.\r\n\r\n## Applications\r\n* **Zlib/Gzip**: Used as the default integrity check for compressed data blocks.\r\n* **PNG Images**: Utilized within the IDAT chunks to ensure pixel data isn't corrupted.\r\n* **Data Transmission**: Fast verification in low-latency environments where CRC32 is too computationally expensive.\r\n\r\n---",
+  "code": {
+    "cpp": "#include <cstdint>\r\n#include <vector>\r\n\r\nuint32_t adler32(const std::vector<uint8_t>& data) {\r\n    uint32_t a = 1, b = 0;\r\n    const uint32_t MOD_ADLER = 65521;\r\n\r\n    for (uint8_t byte : data) {\r\n        a = (a + byte) % MOD_ADLER;\r\n        b = (b + a) % MOD_ADLER;\r\n    }\r\n\r\n    return (b << 16) | a;\r\n}",
+    "python": "def adler32(data: bytes) -> int:\r\n    a, b = 1, 0\r\n    MOD_ADLER = 65521\r\n\r\n    for byte in data:\r\n        a = (a + byte) % MOD_ADLER\r\n        b = (b + a) % MOD_ADLER\r\n\r\n    return (b << 16) | a\r\n\r\n# Usage: result = adler32(b\"Hello World\")",
+    "javascript": "function adler32(data) {\r\n    let a = 1, b = 0;\r\n    const MOD_ADLER = 65521;\r\n\r\n    for (let i = 0; i < data.length; i++) {\r\n        // Works for strings or typed arrays\r\n        const charCode = typeof data === 'string' ? data.charCodeAt(i) : data[i];\r\n        a = (a + charCode) % MOD_ADLER;\r\n        b = (b + a) % MOD_ADLER;\r\n    }\r\n\r\n    return ((b << 16) | a) >>> 0; // >>> 0 ensures unsigned 32-bit int\r\n}",
+    "java": "public class Adler32 {\r\n    public static long computeAdler32(byte[] data) {\r\n        long a = 1, b = 0;\r\n        final int MOD_ADLER = 65521;\r\n\r\n        for (byte d : data) {\r\n            // Ensure byte is treated as unsigned\r\n            a = (a + (d & 0xFF)) % MOD_ADLER;\r\n            b = (b + a) % MOD_ADLER;\r\n        }\r\n\r\n        return (b << 16) | a;\r\n    }\r\n}"
+  }
+}

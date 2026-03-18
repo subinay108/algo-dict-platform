@@ -1,0 +1,25 @@
+{
+  "name": "Binary Search",
+  "slug": "binary-search",
+  "category": "Searching",
+  "description": "Efficient element finding in sorted arrays",
+  "tags": [
+    "array",
+    "divide-and-conquer",
+    "logn"
+  ],
+  "difficulty": "Easy",
+  "time_complexity": {
+    "best": "O(1)",
+    "average": "O(log n)",
+    "worst": "O(log n)"
+  },
+  "space_complexity": "O(1)",
+  "explanation": "## Overview\r\n\r\nBinary Search is an efficient algorithm used to find the position of a target value within a **sorted array**. It works by repeatedly dividing the search space in half.\r\n\r\n## Intuition\r\n\r\nInstead of checking each element one by one (like linear search), Binary Search:\r\n\r\n* Looks at the **middle element**\r\n* Decides whether to search left or right\r\n* Cuts the problem size in half each step\r\n\r\n## How It Works\r\n\r\n1. Start with two pointers: `low` and `high`\r\n2. Find middle index:\r\n\r\n   ```\r\n   mid = (low + high) / 2\r\n   ```\r\n3. Compare:\r\n\r\n   * If `arr[mid] == target` → found\r\n   * If `arr[mid] < target` → search right\r\n   * Else → search left\r\n4. Repeat until found or range becomes invalid\r\n\r\n## Applications\r\n\r\n* Searching in sorted arrays\r\n* Lower bound / upper bound problems\r\n* Binary search on answer (optimization problems)\r\n* Used in databases and indexing\r\n\r\n---",
+  "code": {
+    "cpp": "int binarySearch(vector<int>& arr, int target) {\r\n    int low = 0, high = arr.size() - 1;\r\n\r\n    while (low <= high) {\r\n        int mid = low + (high - low) / 2;\r\n\r\n        if (arr[mid] == target)\r\n            return mid;\r\n        else if (arr[mid] < target)\r\n            low = mid + 1;\r\n        else\r\n            high = mid - 1;\r\n    }\r\n\r\n    return -1;\r\n}",
+    "python": "def binary_search(arr, target):\r\n    low, high = 0, len(arr) - 1\r\n\r\n    while low <= high:\r\n        mid = (low + high) // 2\r\n\r\n        if arr[mid] == target:\r\n            return mid\r\n        elif arr[mid] < target:\r\n            low = mid + 1\r\n        else:\r\n            high = mid - 1\r\n\r\n    return -1",
+    "javascript": "function binarySearch(arr, target) {\r\n    let low = 0, high = arr.length - 1;\r\n\r\n    while (low <= high) {\r\n        let mid = Math.floor((low + high) / 2);\r\n\r\n        if (arr[mid] === target) return mid;\r\n        else if (arr[mid] < target) low = mid + 1;\r\n        else high = mid - 1;\r\n    }\r\n\r\n    return -1;\r\n}",
+    "java": "public class Search {\r\n    public static int binarySearch(int[] arr, int target) {\r\n        int low = 0;\r\n        int high = arr.length - 1;\r\n\r\n        while (low <= high) {\r\n            int mid = low + (high - low) / 2;\r\n\r\n            if (arr[mid] == target) {\r\n                return mid;\r\n            } else if (arr[mid] < target) {\r\n                low = mid + 1;\r\n            } else {\r\n                high = mid - 1;\r\n            }\r\n        }\r\n\r\n        return -1;\r\n    }\r\n}"
+  }
+}

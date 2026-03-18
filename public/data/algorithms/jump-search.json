@@ -1,0 +1,26 @@
+{
+  "name": "Jump Search",
+  "slug": "jump-search",
+  "category": "Searching Algorithms",
+  "description": "A searching algorithm for sorted arrays that finds an element by jumping through fixed-size blocks.",
+  "tags": [
+    "search",
+    "sorted-array",
+    "square-root",
+    "linear-search"
+  ],
+  "difficulty": "Easy",
+  "time_complexity": {
+    "best": "O(1)",
+    "average": "O(√n)",
+    "worst": "O(√n)"
+  },
+  "space_complexity": "O(1)",
+  "explanation": "## Overview\r\n**Jump Search** is an efficient searching algorithm for sorted arrays. It serves as an intermediary between Linear Search (`O(n)`) and Binary Search (`O(\\log n)`). By skipping fixed-size blocks of elements instead of checking every single one, it reduces the total number of comparisons. It is particularly useful when the cost of \"jumping\" or \"skipping\" is less than the cost of a full comparison or when moving backward in the data structure is expensive.\r\n\r\n## Intuition\r\nImagine you are looking for a specific page in a massive book. Instead of flipping one page at a time (Linear Search), you skip forward by 10 pages at once. If you find that the page you are on has a higher number than what you are looking for, you know the target page must be in the last 10 pages you just skipped. You then perform a simple linear search within that small 10-page window.\r\n\r\n\r\n\r\n## How It Works\r\n1.  **Determine Block Size**: The optimal step size is usually `m = \\sqrt{n}`, where `n` is the total number of elements.\r\n2.  **Jump**: Start at the first element and jump forward by `m` steps. Compare the element at the current index with the target value `x`.\r\n3.  **Continue or Backtrack**:\r\n    * If `arr[m] < x`, jump to the next block (`2m`).\r\n    * If `arr[m] > x`, the target must be in the current block. \r\n4.  **Linear Search**: Perform a linear search from the beginning of the previous block (`m`) to the current index (`2m`).\r\n5.  **Termination**: If the element is found, return its index. If you reach the end of the array or cross the target value without finding it, the element is not present.\r\n\r\n## Applications\r\n* **Large Datasets**: Useful when the data is sorted and stored in a way that jumping is cheaper than binary search overhead.\r\n* **Singly Linked Lists**: While typically used for arrays, a variation can be used in data structures where moving forward is much easier than jumping to an arbitrary middle point (Binary Search).\r\n* **Hardware Constraints**: Systems where sequential memory access is faster than random access.\r\n\r\n---",
+  "code": {
+    "cpp": "#include <iostream>\r\n#include <vector>\r\n#include <cmath>\r\n#include <algorithm>\r\n\r\nint jumpSearch(std::vector<int> arr, int x) {\r\n    int n = arr.size();\r\n    int step = std::sqrt(n);\r\n    int prev = 0;\r\n\r\n    // Finding the block where element is present\r\n    while (arr[std::min(step, n) - 1] < x) {\r\n        prev = step;\r\n        step += std::sqrt(n);\r\n        if (prev >= n) return -1;\r\n    }\r\n\r\n    // Doing a linear search for x in block beginning with prev\r\n    while (arr[prev] < x) {\r\n        prev++;\r\n        if (prev == std::min(step, n)) return -1;\r\n    }\r\n\r\n    if (arr[prev] == x) return prev;\r\n    return -1;\r\n}",
+    "python": "import math\r\n\r\ndef jump_search(arr, x):\r\n    n = len(arr)\r\n    step = int(math.sqrt(n))\r\n    prev = 0\r\n    \r\n    # Jump through blocks\r\n    while arr[min(step, n) - 1] < x:\r\n        prev = step\r\n        step += int(math.sqrt(n))\r\n        if prev >= n:\r\n            return -1\r\n    \r\n    # Linear search in the identified block\r\n    while arr[prev] < x:\r\n        prev += 1\r\n        if prev == min(step, n):\r\n            return -1\r\n            \r\n    if arr[prev] == x:\r\n        return prev\r\n    return -1",
+    "javascript": "function jumpSearch(arr, x) {\r\n    const n = arr.length;\r\n    let step = Math.floor(Math.sqrt(n));\r\n    let prev = 0;\r\n\r\n    while (arr[Math.min(step, n) - 1] < x) {\r\n        prev = step;\r\n        step += Math.floor(Math.sqrt(n));\r\n        if (prev >= n) return -1;\r\n    }\r\n\r\n    while (arr[prev] < x) {\r\n        prev++;\r\n        if (prev === Math.min(step, n)) return -1;\r\n    }\r\n\r\n    if (arr[prev] === x) return prev;\r\n    return -1;\r\n}",
+    "java": "public class JumpSearch {\r\n    public static int search(int[] arr, int x) {\r\n        int n = arr.length;\r\n        int step = (int) Math.floor(Math.sqrt(n));\r\n        int prev = 0;\r\n\r\n        while (arr[Math.min(step, n) - 1] < x) {\r\n            prev = step;\r\n            step += (int) Math.floor(Math.sqrt(n));\r\n            if (prev >= n) return -1;\r\n        }\r\n\r\n        while (arr[prev] < x) {\r\n            prev++;\r\n            if (prev == Math.min(step, n)) return -1;\r\n        }\r\n\r\n        if (arr[prev] == x) return prev;\r\n        return -1;\r\n    }\r\n}"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Insertion Sort",
+  "slug": "insertion-sort",
+  "category": "Sorting Algorithms",
+  "description": "A simple comparison-based sorting algorithm that builds the final sorted array one item at a time.",
+  "tags": [
+    "sorting",
+    "comparison",
+    "in-place",
+    "stable",
+    "online"
+  ],
+  "difficulty": "Easy",
+  "time_complexity": {
+    "best": "O(n)",
+    "average": "O(n^2)",
+    "worst": "O(n^2)"
+  },
+  "space_complexity": "O(1)",
+  "explanation": "## Overview\r\n**Insertion Sort** is an intuitive sorting algorithm that works similarly to the way you might sort playing cards in your hands. It is highly efficient for small datasets and \"nearly sorted\" arrays, where it can outperform more complex algorithms like QuickSort or MergeSort due to its low overhead.\r\n\r\n## Intuition\r\nImagine you are holding a hand of cards. You pick up a new card and look at the cards already in your hand from right to left. You shift the cards that are larger than your new card to the right, creating a \"gap,\" and then drop the new card into its correct sorted position. You repeat this until all cards are in your hand and sorted.\r\n\r\n\r\n\r\n## How It Works\r\nThe algorithm divides the array into a \"sorted\" part and an \"unsorted\" part.\r\n\r\n1.  **Start**: Assume the first element is already sorted.\r\n2.  **Pick**: Take the next element from the unsorted part (let's call this the `key`).\r\n3.  **Compare**: Compare the `key` with the elements in the sorted part from right to left.\r\n4.  **Shift**: If an element in the sorted part is larger than the `key`, shift that element one position to the right.\r\n5.  **Insert**: Repeat step 4 until you find an element smaller than the `key` (or reach the start of the array). Place the `key` in the empty slot.\r\n6.  **Repeat**: Move to the next unsorted element and repeat until the entire array is processed.\r\n\r\n\r\n\r\n## Applications\r\n* **Small Data**: Preferred for arrays with a small number of elements (typically 10-20).\r\n* **Nearly Sorted Data**: Extremely fast when the data is already mostly in order.\r\n* **Online Sorting**: Can sort a list as it receives it (e.g., streaming data), as it only needs to see one new element at a time to place it.\r\n* **Hybrid Algorithms**: Used as the final \"cleanup\" step in more advanced algorithms like Timsort or Introsort.\r\n\r\n---",
+  "code": {
+    "cpp": "#include <vector>\r\n\r\nvoid insertionSort(std::vector<int>& arr) {\r\n    int n = arr.size();\r\n    for (int i = 1; i < n; i++) {\r\n        int key = arr[i];\r\n        int j = i - 1;\r\n\r\n        // Move elements of arr[0..i-1] that are greater than key\r\n        // to one position ahead of their current position\r\n        while (j >= 0 && arr[j] > key) {\r\n            arr[j + 1] = arr[j];\r\n            j = j - 1;\r\n        }\r\n        arr[j + 1] = key;\r\n    }\r\n}",
+    "python": "def insertion_sort(arr):\r\n    for i in range(1, len(arr)):\r\n        key = arr[i]\r\n        j = i - 1\r\n        \r\n        # Shift elements that are greater than the key\r\n        while j >= 0 and arr[j] > key:\r\n            arr[j + 1] = arr[j]\r\n            j -= 1\r\n        arr[j + 1] = key\r\n    return arr",
+    "javascript": "function insertionSort(arr) {\r\n    for (let i = 1; i < arr.length; i++) {\r\n        let key = arr[i];\r\n        let j = i - 1;\r\n\r\n        while (j >= 0 && arr[j] > key) {\r\n            arr[j + 1] = arr[j];\r\n            j--;\r\n        }\r\n        arr[j + 1] = key;\r\n    }\r\n    return arr;\r\n}",
+    "java": "public class InsertionSort {\r\n    public static void sort(int[] arr) {\r\n        int n = arr.length;\r\n        for (int i = 1; i < n; ++i) {\r\n            int key = arr[i];\r\n            int j = i - 1;\r\n\r\n            while (j >= 0 && arr[j] > key) {\r\n                arr[j + 1] = arr[j];\r\n                j = j - 1;\r\n            }\r\n            arr[j + 1] = key;\r\n        }\r\n    }\r\n}"
+  }
+}

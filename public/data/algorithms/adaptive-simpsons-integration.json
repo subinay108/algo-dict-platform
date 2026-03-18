@@ -1,0 +1,26 @@
+{
+  "name": "Adaptive Simpson's Method",
+  "slug": "adaptive-simpsons-integration",
+  "category": "Numerical Analysis",
+  "description": "A dynamic numerical integration technique that adjusts step sizes based on the function's local curvature.",
+  "tags": [
+    "calculus",
+    "integration",
+    "numerical-methods",
+    "recursion"
+  ],
+  "difficulty": "Medium",
+  "time_complexity": {
+    "best": "O(log n)",
+    "average": "O(n)",
+    "worst": "O(2^d)"
+  },
+  "space_complexity": "O(d)",
+  "explanation": "## Overview\r\nThe **Adaptive Simpson's Method** is a technique for calculating a definite integral that automatically adjusts the interval width to maintain a specified error tolerance. Unlike the standard Simpson's rule, which uses a fixed number of segments, this method concentrates more computational effort (more sub-intervals) on parts of the function that are highly oscillatory or \"curvy\" while using fewer segments in flatter regions.\r\n\r\n## Intuition\r\nStandard integration rules can be inefficient: if you pick a tiny step size to capture a spike in the middle of a function, you waste time using that same tiny step on the flat parts. The adaptive approach treats integration like a recursive \"check-and-balance\" system. It compares a single Simpson calculation over an interval to the sum of two Simpson calculations over the halves of that same interval. If the difference is small enough, it stops; if not, it keeps subdividing.\r\n\r\n\r\n\r\n## How It Works\r\n1.  **Simpson's Rule**: First, define the basic Simpson's Rule for an interval `[a, b]` with midpoint `c = \\frac{a+b}{2}`:\r\n    ``S(a, b) = \\frac{b-a}{6} \\left[ f(a) + 4f(c) + f(b) \\right]``\r\n2.  **Divide**: Calculate `S(a, b)` and then calculate the sum of two halves: `S(a, c) + S(c, b)`, where `c` is the midpoint of `[a, b]`.\r\n3.  **Error Estimation**: The error is roughly proportional to `|S(a, b) - (S(a, c) + S(c, b))|`.\r\n4.  **Recurse**: If the error estimate is within the tolerance `\\epsilon`, return `S(a, c) + S(c, b) + \\text{error\\_correction}`.\r\n5.  **Refine**: If the error is too high, recursively call the function for both `[a, c]` and `[c, b]`, passing half of the tolerance (`\\epsilon/2`) to each side.\r\n\r\n## Applications\r\n* **Scientific Computing**: Evaluating integrals where the function's behavior changes drastically.\r\n* **Computer Graphics**: Calculating lighting or area properties where geometric detail varies.\r\n* **Physics Simulations**: Modeling systems with sudden transitions or \"shocks.\"\r\n\r\n---",
+  "code": {
+    "cpp": "#include <iostream>\r\n#include <cmath>\r\n\r\ndouble f(double x) {\r\n    return std::sin(x); // Example function\r\n}\r\n\r\ndouble simpson(double a, double b) {\r\n    double c = (a + b) / 2.0;\r\n    return (std::abs(b - a) / 6.0) * (f(a) + 4.0 * f(c) + f(b));\r\n}\r\n\r\ndouble adaptiveSimpson(double a, double b, double eps, double whole) {\r\n    double c = (a + b) / 2.0;\r\n    double left = simpson(a, c);\r\n    double right = simpson(c, b);\r\n    if (std::abs(left + right - whole) <= 15.0 * eps) {\r\n        return left + right + (left + right - whole) / 15.0;\r\n    }\r\n    return adaptiveSimpson(a, c, eps / 2.0, left) + \r\n           adaptiveSimpson(c, b, eps / 2.0, right);\r\n}",
+    "python": "def simpson(f, a, b):\r\n    c = (a + b) / 2\r\n    return abs(b - a) / 6 * (f(a) + 4 * f(c) + f(b))\r\n\r\ndef adaptive_simpson(f, a, b, eps, whole):\r\n    c = (a + b) / 2\r\n    left = simpson(f, a, c)\r\n    right = simpson(f, c, b)\r\n    \r\n    if abs(left + right - whole) <= 15 * eps:\r\n        return left + right + (left + right - whole) / 15\r\n    \r\n    return (adaptive_simpson(f, a, c, eps / 2, left) + \r\n            adaptive_simpson(f, c, b, eps / 2, right))\r\n\r\n# Usage: adaptive_simpson(f, a, b, 1e-6, simpson(f, a, b))",
+    "javascript": "function simpson(f, a, b) {\r\n    const c = (a + b) / 2;\r\n    return (Math.abs(b - a) / 6) * (f(a) + 4 * f(c) + f(b));\r\n}\r\n\r\nfunction adaptiveSimpson(f, a, b, eps, whole) {\r\n    const c = (a + b) / 2;\r\n    const left = simpson(f, a, c);\r\n    const right = simpson(f, c, b);\r\n\r\n    if (Math.abs(left + right - whole) <= 15 * eps) {\r\n        return left + right + (left + right - whole) / 15;\r\n    }\r\n\r\n    return adaptiveSimpson(f, a, c, eps / 2, left) +\r\n           adaptiveSimpson(f, c, b, eps / 2, right);\r\n}",
+    "java": "public class AdaptiveSimpson {\r\n    interface Function { double apply(double x); }\r\n\r\n    public static double simpson(Function f, double a, double b) {\r\n        double c = (a + b) / 2.0;\r\n        return (Math.abs(b - a) / 6.0) * (f.apply(a) + 4.0 * f.apply(c) + f.apply(b));\r\n    }\r\n\r\n    public static double integrate(Function f, double a, double b, double eps, double whole) {\r\n        double c = (a + b) / 2.0;\r\n        double left = simpson(f, a, c);\r\n        double right = simpson(f, c, b);\r\n\r\n        if (Math.abs(left + right - whole) <= 15.0 * eps) {\r\n            return left + right + (left + right - whole) / 15.0;\r\n        }\r\n        return integrate(f, a, c, eps / 2.0, left) + integrate(f, c, b, eps / 2.0, right);\r\n    }\r\n}"
+  }
+}

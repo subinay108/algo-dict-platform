@@ -1,0 +1,26 @@
+{
+  "name": "Binary Exponentiation",
+  "slug": "binary-exponentiation",
+  "category": "Mathematics",
+  "description": "An efficient algorithm for calculating `a^n` in logarithmic time by repeatedly squaring the base.",
+  "tags": [
+    "math",
+    "recursion",
+    "optimization",
+    "number-theory"
+  ],
+  "difficulty": "Easy",
+  "time_complexity": {
+    "best": "O(log n)",
+    "average": "O(log n)",
+    "worst": "O(log n)"
+  },
+  "space_complexity": "O(1)",
+  "explanation": "## Overview\r\n**Binary Exponentiation** (also known as **Exponentiation by Squaring**) is a technique to compute `a^n` using only `O(\\log n)` multiplications, instead of the `O(n)` multiplications required by the naive approach. This is particularly crucial in competitive programming and cryptography, where `n` can be as large as `10^{18}` and results are often taken modulo `m`.\r\n\r\n## Intuition\r\nThe core idea is to use the property that exponents can be split. If we want to calculate `3^{10}`, we can observe that `3^{10} = (3^5)^2`. Then, `3^5 = 3 \\cdot (3^2)^2`. By halving the power at each step, we reach the result much faster. It effectively treats the exponent as a sum of powers of 2 (its binary representation). For example, `3^{13} = 3^{(1101)_2} = 3^8 \\cdot 3^4 \\cdot 3^1`.\r\n\r\n\r\n\r\n## How It Works\r\n1.  **Base Case**: If `n = 0`, return 1.\r\n2.  **Recursive/Iterative Step**:\r\n    * If `n` is **even**: `a^n = (a^{n/2})^2`\r\n    * If `n` is **odd**: `a^n = a \\cdot (a^{(n-1)/2})^2`\r\n3.  **Modular Version**: Often, we calculate `(a^n) \\pmod m`. In each step, we simply apply the modulo operator to keep the numbers small:\r\n    ``res = (res \\cdot res) \\pmod m``\r\n4.  **Bitwise Optimization**: In the iterative version, we check if the current least significant bit of `n` is 1 using `n & 1`. If it is, we multiply the current result by the current base. We then square the base and right-shift `n` (`n >>= 1`).\r\n\r\n## Applications\r\n* **Modular Inverse**: Calculating `a^{m-2} \\pmod m` using Fermat's Little Theorem.\r\n* **Cryptography**: RSA encryption relies heavily on modular exponentiation.\r\n* **Matrix Exponentiation**: Finding the `n^{th}` Fibonacci number in `O(\\log n)` time.\r\n* **Geometric Transformations**: Applying a transformation multiple times efficiently.\r\n\r\n---",
+  "code": {
+    "cpp": "long long binpow(long long a, long long b) {\r\n    long long res = 1;\r\n    while (b > 0) {\r\n        if (b & 1)\r\n            res = res * a;\r\n        a = a * a;\r\n        b >>= 1;\r\n    }\r\n    return res;\r\n}",
+    "python": "def binpow(a, b, m=None):\r\n    res = 1\r\n    a = a if m is None else a % m\r\n    while b > 0:\r\n        if b % 2 == 1:\r\n            res = res * a if m is None else (res * a) % m\r\n        a = a * a if m is None else (a * a) % m\r\n        b //= 2\r\n    return res\r\n\r\n# Note: Python's built-in pow(a, b, m) already uses this algorithm.",
+    "javascript": "function binpow(a, b) {\r\n    let res = 1n; // Use BigInt for large numbers\r\n    let base = BigInt(a);\r\n    let exp = BigInt(b);\r\n\r\n    while (exp > 0n) {\r\n        if (exp % 2n === 1n) {\r\n            res = res * base;\r\n        }\r\n        base = base * base;\r\n        exp = exp / 2n;\r\n    }\r\n    return res;\r\n}",
+    "java": "public class BinaryExponentiation {\r\n    public static long power(long a, long b) {\r\n        long res = 1;\r\n        while (b > 0) {\r\n            if ((b & 1) == 1) \r\n                res = res * a;\r\n            a = a * a;\r\n            b >>= 1;\r\n        }\r\n        return res;\r\n    }\r\n}"
+  }
+}

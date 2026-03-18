@@ -1,0 +1,26 @@
+{
+  "name": "Gnome Sort",
+  "slug": "gnome-sort",
+  "category": "Sorting Algorithms",
+  "description": "A simple sorting algorithm similar to insertion sort that moves elements to their proper position by repeated swaps.",
+  "tags": [
+    "sorting",
+    "exchange-sort",
+    "comparison",
+    "stable"
+  ],
+  "difficulty": "Easy",
+  "time_complexity": {
+    "best": "O(n)",
+    "average": "O(n^2)",
+    "worst": "O(n^2)"
+  },
+  "space_complexity": "O(1)",
+  "explanation": "## Overview\r\n**Gnome Sort** (originally proposed by Hamid Sarbazi-Azad in 2000 as \"Stupid Sort\") is a sorting algorithm that is conceptually similar to Insertion Sort, but the movement of elements is accomplished through a series of swaps, much like a garden gnome sorting a line of flower pots. It is a stable sort with an extremely simple implementation, requiring no nested loops.\r\n\r\n## Intuition\r\nThe algorithm is based on the technique used by a Dutch Garden Gnome:\r\n1. The gnome looks at the flower pot next to him and the previous one. If they are in the right order, he steps one pot forward.\r\n2. If they are in the wrong order, he swaps them and steps one pot backward to check if the swapped pot is now in the right place relative to its new neighbor.\r\n3. If there is no previous pot (he is at the start), he always steps forward.\r\n\r\n\r\n\r\n## How It Works\r\nThe algorithm maintains a single index `pos`.\r\n\r\n1. **Start**: Initialize `pos = 0`.\r\n2. **Boundary Check**: If `pos` is at the end of the array, the sort is complete.\r\n3. **Comparison**:\r\n    * If `pos == 0` or `arr[pos] >= arr[pos - 1]`, the current element is in the correct relative order. **Increment** `pos`.\r\n    * If `arr[pos] < arr[pos - 1]`, the elements are out of order. **Swap** them and **decrement** `pos` to ensure the moved element is compared with its new preceding neighbor.\r\n4. **Repeat**: Continue until the index reaches the end of the array.\r\n\r\n## Applications\r\n* **Educational**: Excellent for demonstrating how a single loop can perform a complete sort through conditional index manipulation.\r\n* **Minimal Memory Systems**: Like other in-place sorts, it requires only `O(1)` extra space.\r\n* **Nearly Sorted Data**: Performs well when elements are close to their final positions, though Insertion Sort is generally preferred for this use case.\r\n\r\n---",
+  "code": {
+    "cpp": "#include <vector>\r\n#include <algorithm>\r\n\r\nvoid gnomeSort(std::vector<int>& arr) {\r\n    int n = arr.size();\r\n    int pos = 0;\r\n    while (pos < n) {\r\n        if (pos == 0 || arr[pos] >= arr[pos - 1]) {\r\n            pos++;\r\n        } else {\r\n            std::swap(arr[pos], arr[pos - 1]);\r\n            pos--;\r\n        }\r\n    }\r\n}",
+    "python": "def gnome_sort(arr):\r\n    pos = 0\r\n    n = len(arr)\r\n    while pos < n:\r\n        if pos == 0 or arr[pos] >= arr[pos - 1]:\r\n            pos += 1\r\n        else:\r\n            arr[pos], arr[pos - 1] = arr[pos - 1], arr[pos]\r\n            pos -= 1\r\n    return arr",
+    "javascript": "function gnomeSort(arr) {\r\n    let pos = 0;\r\n    while (pos < arr.length) {\r\n        if (pos === 0 || arr[pos] >= arr[pos - 1]) {\r\n            pos++;\r\n        } else {\r\n            [arr[pos], arr[pos - 1]] = [arr[pos - 1], arr[pos]];\r\n            pos--;\r\n        }\r\n    }\r\n    return arr;\r\n}",
+    "java": "public class GnomeSort {\r\n    public static void sort(int[] arr) {\r\n        int pos = 0;\r\n        while (pos < arr.length) {\r\n            if (pos == 0 || arr[pos] >= arr[pos - 1]) {\r\n                pos++;\r\n            } else {\r\n                int temp = arr[pos];\r\n                arr[pos] = arr[pos - 1];\r\n                arr[pos - 1] = temp;\r\n                pos--;\r\n            }\r\n        }\r\n    }\r\n}"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Bellman-Ford Algorithm",
+  "slug": "bellman-ford-algorithm",
+  "category": "Graph Theory",
+  "description": "A shortest-path algorithm that handles graphs with negative edge weights and detects negative cycles.",
+  "tags": [
+    "graph",
+    "shortest-path",
+    "dynamic-programming",
+    "negative-weights"
+  ],
+  "difficulty": "Medium",
+  "time_complexity": {
+    "best": "O(E)",
+    "average": "O(V * E)",
+    "worst": "O(V * E)"
+  },
+  "space_complexity": "O(V)",
+  "explanation": "## Overview\r\nThe **Bellman-Ford Algorithm** computes the shortest paths from a single source vertex to all other vertices in a weighted digraph. While it is slower than Dijkstra's algorithm, it is more versatile because it can process graphs containing negative edge weights. Crucially, it is also used to detect the presence of **negative cycles**—loops where the total weight is less than zero—which would otherwise cause a shortest-path search to run infinitely.\r\n\r\n## Intuition\r\nThe algorithm is based on the **principle of relaxation**. If we know that the distance from `A` to `B` is 10, and we find an edge from `B` to `C` with weight 2, then the distance to `C` is at most 12. Bellman-Ford simply repeats this check for every single edge in the graph. Since the longest possible path without a cycle has `V - 1` edges, we only need to relax all edges `V - 1` times to guarantee we've found the shortest paths.\r\n\r\n\r\n\r\n## How It Works\r\n1.  **Initialize**: Set the distance to the source vertex to 0 and all other vertices to `\\infty`.\r\n2.  **Relax Edges**: Repeat the following `V - 1` times (where `V` is the number of vertices):\r\n    * For every edge `(u, v)` with weight `w`:\r\n    * If `dist[u] + w < dist[v]`, then update `dist[v] = dist[u] + w`.\r\n3.  **Check for Negative Cycles**: Run the relaxation step one more time.\r\n    * If any distance can still be shortened (`dist[u] + w < dist[v]`), it means a negative cycle exists because a path is still getting \"shorter\" even after `V - 1` iterations.\r\n4.  **Result**: If no negative cycle is found, the distance array contains the shortest paths.\r\n\r\n## Applications\r\n* **Distance Vector Routing**: Used in protocols like RIP (Routing Information Protocol) to find paths in a network.\r\n* **Finance**: Detecting arbitrage opportunities by looking for negative cycles in currency exchange graphs.\r\n* **Network Flow**: Used as a subroutine in algorithms like successive shortest path for Min-Cost Max-Flow.\r\n\r\n---",
+  "code": {
+    "cpp": "#include <vector>\r\n#include <climits>\r\n\r\nstruct Edge {\r\n    int u, v, weight;\r\n};\r\n\r\nbool bellmanFord(int V, int E, int src, std::vector<Edge>& edges, std::vector<int>& dist) {\r\n    dist.assign(V, INT_MAX);\r\n    dist[src] = 0;\r\n\r\n    for (int i = 1; i <= V - 1; i++) {\r\n        for (const auto& edge : edges) {\r\n            if (dist[edge.u] != INT_MAX && dist[edge.u] + edge.weight < dist[edge.v]) {\r\n                dist[edge.v] = dist[edge.u] + edge.weight;\r\n            }\r\n        }\r\n    }\r\n\r\n    for (const auto& edge : edges) {\r\n        if (dist[edge.u] != INT_MAX && dist[edge.u] + edge.weight < dist[edge.v]) {\r\n            return false; // Negative cycle detected\r\n        }\r\n    }\r\n    return true;\r\n}",
+    "python": "def bellman_ford(vertices, edges, src):\r\n    dist = [float(\"inf\")] * vertices\r\n    dist[src] = 0\r\n\r\n    for _ in range(vertices - 1):\r\n        for u, v, w in edges:\r\n            if dist[u] != float(\"inf\") and dist[u] + w < dist[v]:\r\n                dist[v] = dist[u] + w\r\n\r\n    for u, v, w in edges:\r\n        if dist[u] != float(\"inf\") and dist[u] + w < dist[v]:\r\n            print(\"Graph contains negative weight cycle\")\r\n            return None\r\n\r\n    return dist",
+    "javascript": "function bellmanFord(vertices, edges, source) {\r\n    let dist = Array(vertices).fill(Infinity);\r\n    dist[source] = 0;\r\n\r\n    for (let i = 0; i < vertices - 1; i++) {\r\n        for (let [u, v, w] of edges) {\r\n            if (dist[u] !== Infinity && dist[u] + w < dist[v]) {\r\n                dist[v] = dist[u] + w;\r\n            }\r\n        }\r\n    }\r\n\r\n    for (let [u, v, w] of edges) {\r\n        if (dist[u] !== Infinity && dist[u] + w < dist[v]) {\r\n            throw new Error(\"Negative weight cycle detected\");\r\n        }\r\n    }\r\n\r\n    return dist;\r\n}",
+    "java": "import java.util.*;\r\n\r\npublic class BellmanFord {\r\n    class Edge { int u, v, w; }\r\n\r\n    public void solve(int V, int E, int src, Edge[] edges) {\r\n        int[] dist = new int[V];\r\n        Arrays.fill(dist, Integer.MAX_VALUE);\r\n        dist[src] = 0;\r\n\r\n        for (int i = 1; i < V; ++i) {\r\n            for (Edge e : edges) {\r\n                if (dist[e.u] != Integer.MAX_VALUE && dist[e.u] + e.w < dist[e.v])\r\n                    dist[e.v] = dist[e.u] + e.w;\r\n            }\r\n        }\r\n\r\n        for (Edge e : edges) {\r\n            if (dist[e.u] != Integer.MAX_VALUE && dist[e.u] + e.w < dist[e.v])\r\n                System.out.println(\"Negative cycle found\");\r\n        }\r\n    }\r\n}"
+  }
+}

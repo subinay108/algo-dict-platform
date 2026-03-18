@@ -1,0 +1,212 @@
+[
+  {
+    "name": "0/1 Knapsack Problem",
+    "slug": "0-1-knapsack-problem",
+    "description": "An optimization problem that selects items with given weights and values to maximize total value without exceeding a weight capacity.",
+    "time_complexity": "O(n * W)"
+  },
+  {
+    "name": "A* Search Algorithm",
+    "slug": "a-star-search-algorithm",
+    "description": "An informed search algorithm that uses heuristics to find the shortest path between nodes.",
+    "time_complexity": "O(bd)"
+  },
+  {
+    "name": "Adaptive Simpson's Method",
+    "slug": "adaptive-simpsons-integration",
+    "description": "A dynamic numerical integration technique that adjusts step sizes based on the function's local curvature.",
+    "time_complexity": "O(n)"
+  },
+  {
+    "name": "Adler-32 Checksum",
+    "slug": "adler-32-checksum",
+    "description": "A high-speed checksum algorithm that uses two 16-bit sums to verify data integrity.",
+    "time_complexity": "O(n)"
+  },
+  {
+    "name": "Affine Cipher",
+    "slug": "affine-cipher",
+    "description": "A monoalphabetic substitution cipher that uses a linear mathematical function to encrypt letters.",
+    "time_complexity": "O(n)"
+  },
+  {
+    "name": "Arithmetic Coding",
+    "slug": "arithmetic-coding",
+    "description": "A form of entropy encoding that represents an entire message as a single floating-point number between 0 and 1.",
+    "time_complexity": "O(n)"
+  },
+  {
+    "name": "Baker's Algorithm",
+    "slug": "bakers-algorithm",
+    "description": "A real-time incremental garbage collection algorithm designed for heap management in systems with strictly bounded pause times.",
+    "time_complexity": "O(1)"
+  },
+  {
+    "name": "Bellman-Ford Algorithm",
+    "slug": "bellman-ford-algorithm",
+    "description": "A shortest-path algorithm that handles graphs with negative edge weights and detects negative cycles.",
+    "time_complexity": "O(V * E)"
+  },
+  {
+    "name": "Binary Exponentiation",
+    "slug": "binary-exponentiation",
+    "description": "An efficient algorithm for calculating `a^n` in logarithmic time by repeatedly squaring the base.",
+    "time_complexity": "O(log n)"
+  },
+  {
+    "name": "Binary Search",
+    "slug": "binary-search",
+    "description": "Efficient element finding in sorted arrays",
+    "time_complexity": "O(log n)"
+  },
+  {
+    "name": "Breadth-First Search (BFS)",
+    "slug": "breadth-first-search",
+    "description": "A graph traversal algorithm that explores all neighbor nodes at the present depth before moving to nodes at the next depth level.",
+    "time_complexity": "O(V + E)"
+  },
+  {
+    "name": "Bubble Sort",
+    "slug": "bubble-sort",
+    "description": "A simple comparison-based sorting algorithm that repeatedly steps through the list, swaps adjacent elements if they are in the wrong order.",
+    "time_complexity": "O(n^2)"
+  },
+  {
+    "name": "Counting Sort",
+    "slug": "counting-sort",
+    "description": "A non-comparison-based sorting algorithm that sorts elements by counting the occurrences of each unique value.",
+    "time_complexity": "O(n + k)"
+  },
+  {
+    "name": "Depth-First Search (DFS)",
+    "slug": "depth-first-search",
+    "description": "A graph traversal algorithm that explores as far as possible along each branch before backtracking.",
+    "time_complexity": "O(V + E)"
+  },
+  {
+    "name": "Dijkstra’s Algorithm",
+    "slug": "dijkstras-algorithm",
+    "description": "A greedy algorithm that finds the shortest path from a single source vertex to all other vertices in a graph with non-negative edge weights.",
+    "time_complexity": "O(V + E log V)"
+  },
+  {
+    "name": "Dinic's Algorithm",
+    "slug": "dinics-algorithm",
+    "description": "A strongly polynomial algorithm for computing the maximum flow in a network using level graphs and blocking flows.",
+    "time_complexity": "O(V^2 E)"
+  },
+  {
+    "name": "Euclidean Algorithm",
+    "slug": "euclidean-algorithm",
+    "description": "An efficient method for computing the greatest common divisor (GCD) of two integers.",
+    "time_complexity": "O(log(min(a, b)))"
+  },
+  {
+    "name": "Floyd-Warshall Algorithm",
+    "slug": "floyd-warshall-algorithm",
+    "description": "A dynamic programming algorithm for finding shortest paths between all pairs of vertices in a weighted graph.",
+    "time_complexity": "O(V^3)"
+  },
+  {
+    "name": "Ford-Fulkerson Algorithm",
+    "slug": "ford-fulkerson-algorithm",
+    "description": "A fundamental method for calculating the maximum flow in a network by iteratively finding augmenting paths.",
+    "time_complexity": "O(E * f)"
+  },
+  {
+    "name": "Genetic Algorithm",
+    "slug": "genetic-algorithm",
+    "description": "A search heuristic inspired by Charles Darwin’s theory of natural evolution to find optimal solutions to complex problems.",
+    "time_complexity": "O(g * p * n)"
+  },
+  {
+    "name": "Gnome Sort",
+    "slug": "gnome-sort",
+    "description": "A simple sorting algorithm similar to insertion sort that moves elements to their proper position by repeated swaps.",
+    "time_complexity": "O(n^2)"
+  },
+  {
+    "name": "Graham Scan",
+    "slug": "graham-scan",
+    "description": "An efficient algorithm for computing the convex hull of a finite set of points in a 2D plane.",
+    "time_complexity": "O(n log n)"
+  },
+  {
+    "name": "Heap Sort",
+    "slug": "heap-sort",
+    "description": "A comparison-based sorting algorithm that uses a binary heap data structure to sort elements in-place.",
+    "time_complexity": "O(n log n)"
+  },
+  {
+    "name": "Hierholzer's Algorithm (Eulerian Path)",
+    "slug": "eulerian-path-algorithm",
+    "description": "An efficient algorithm to find a path in a graph that visits every edge exactly once.",
+    "time_complexity": "O(V + E)"
+  },
+  {
+    "name": "Huffman Coding",
+    "slug": "huffman-coding",
+    "description": "A greedy algorithm for lossless data compression that assigns variable-length codes based on symbol frequency.",
+    "time_complexity": "O(n log n)"
+  },
+  {
+    "name": "Insertion Sort",
+    "slug": "insertion-sort",
+    "description": "A simple comparison-based sorting algorithm that builds the final sorted array one item at a time.",
+    "time_complexity": "O(n^2)"
+  },
+  {
+    "name": "Johnson’s Algorithm",
+    "slug": "johnsons-algorithm",
+    "description": "An all-pairs shortest path algorithm designed for sparse graphs that handles negative edge weights using reweighting.",
+    "time_complexity": "O(V^2 log V + VE)"
+  },
+  {
+    "name": "Jump Search",
+    "slug": "jump-search",
+    "description": "A searching algorithm for sorted arrays that finds an element by jumping through fixed-size blocks.",
+    "time_complexity": "O(√n)"
+  },
+  {
+    "name": "Kadane’s Algorithm",
+    "slug": "kadanes-algorithm",
+    "description": "An efficient algorithm for finding the maximum sum contiguous subarray within a one-dimensional array of numbers.",
+    "time_complexity": "O(n)"
+  },
+  {
+    "name": "Knuth-Morris-Pratt (KMP) Algorithm",
+    "slug": "kmp-string-matching",
+    "description": "An efficient string-searching algorithm that avoids redundant comparisons by using a partial match table.",
+    "time_complexity": "O(n + m)"
+  },
+  {
+    "name": "Kosaraju’s Algorithm",
+    "slug": "kosarajus-algorithm",
+    "description": "A depth-first search-based algorithm to find all strongly connected components (SCCs) in a directed graph.",
+    "time_complexity": "O(V + E)"
+  },
+  {
+    "name": "Kruskal’s Algorithm",
+    "slug": "kruskals-algorithm",
+    "description": "A greedy algorithm that finds a Minimum Spanning Tree (MST) for a connected weighted graph by adding edges in increasing order of weight.",
+    "time_complexity": "O(E log E)"
+  },
+  {
+    "name": "Linear Search",
+    "slug": "linear-search",
+    "description": "A simple searching algorithm that checks every element in a list sequentially until a match is found or the end is reached.",
+    "time_complexity": "O(n)"
+  },
+  {
+    "name": "Longest Common Subsequence (LCS)",
+    "slug": "longest-common-subsequence",
+    "description": "An algorithm to find the longest sequence of characters that appear in the same relative order in two strings.",
+    "time_complexity": "O(m * n)"
+  },
+  {
+    "name": "Matrix Chain Multiplication (MCM)",
+    "slug": "matrix-chain-multiplication",
+    "description": "An optimization problem to find the most efficient way to multiply a sequence of matrices by minimizing the total number of scalar multiplications.",
+    "time_complexity": "O(n^3)"
+  }
+]

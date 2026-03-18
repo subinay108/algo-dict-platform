@@ -1,0 +1,27 @@
+{
+  "name": "Depth-First Search (DFS)",
+  "slug": "depth-first-search",
+  "category": "Graph Theory",
+  "description": "A graph traversal algorithm that explores as far as possible along each branch before backtracking.",
+  "tags": [
+    "graph",
+    "traversal",
+    "recursion",
+    "stack",
+    "connectivity"
+  ],
+  "difficulty": "Easy",
+  "time_complexity": {
+    "best": "O(V + E)",
+    "average": "O(V + E)",
+    "worst": "O(V + E)"
+  },
+  "space_complexity": "O(V)",
+  "explanation": "## Overview\r\n**Depth-First Search (DFS)** is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node (selecting some arbitrary node as the root in the case of a graph) and explores as far as possible along each branch before backtracking. It is a fundamental building block for many complex graph algorithms like finding strongly connected components or solving puzzles.\r\n\r\n## Intuition\r\nImagine you are navigating a maze. To ensure you don't get lost, you follow a simple rule: always take the leftmost path available. When you hit a dead end, you backtrack to the last junction where you could have taken a different turn and try the next available path. This \"go deep until you can't\" strategy is exactly how DFS operates, using a stack to remember where to return.\r\n\r\n\r\n\r\n## How It Works\r\n1.  **Initialize**: Create a way to track **Visited** nodes (usually a boolean array or a set) to avoid infinite loops in cycles.\r\n2.  **Start**: Pick a starting node, mark it as visited, and push it onto a **Stack** (or use the call stack in recursion).\r\n3.  **Recursive Step**:\r\n    * For the current node, look at all its adjacent neighbors.\r\n    * If a neighbor has not been visited, recursively call the DFS function for that neighbor.\r\n4.  **Backtrack**: If all neighbors of the current node have been visited (or it has no neighbors), return to the previous node in the stack and continue the process for its remaining neighbors.\r\n5.  **Termination**: The algorithm finishes when the stack is empty and all reachable nodes have been visited.\r\n\r\n## Applications\r\n* **Pathfinding**: Finding a path between two nodes (though not necessarily the shortest).\r\n* **Topological Sorting**: Ordering tasks with dependencies (e.g., build systems).\r\n* **Cycle Detection**: Checking if a graph contains any loops.\r\n* **Solving Puzzles**: Finding solutions to mazes or Sudoku by exploring possible moves.\r\n\r\n---",
+  "code": {
+    "cpp": "#include <vector>\r\n#include <iostream>\r\n\r\nvoid dfs(int u, const std::vector<std::vector<int>>& adj, std::vector<bool>& visited) {\r\n    visited[u] = true;\r\n    // Process node u here\r\n    \r\n    for (int v : adj[u]) {\r\n        if (!visited[v]) {\r\n            dfs(v, adj, visited);\r\n        }\r\n    }\r\n}",
+    "python": "def dfs(graph, start, visited=None):\r\n    if visited is None:\r\n        visited = set()\r\n    \r\n    visited.add(start)\r\n    # Process current node here\r\n    \r\n    for neighbor in graph[start]:\r\n        if neighbor not in visited:\r\n            dfs(graph, neighbor, visited)\r\n    return visited",
+    "javascript": "function dfs(node, adj, visited = new Set()) {\r\n    visited.add(node);\r\n    // Process node here\r\n    \r\n    for (const neighbor of adj[node]) {\r\n        if (!visited.has(neighbor)) {\r\n            dfs(neighbor, adj, visited);\r\n        }\r\n    }\r\n    return visited;\r\n}",
+    "java": "import java.util.*;\r\n\r\npublic class DFS {\r\n    public void traverse(int u, List<List<Integer>> adj, boolean[] visited) {\r\n        visited[u] = true;\r\n        // Process node u\r\n        \r\n        for (int v : adj.get(u)) {\r\n            if (!visited[v]) {\r\n                traverse(v, adj, visited);\r\n            }\r\n        }\r\n    }\r\n}"
+  }
+}

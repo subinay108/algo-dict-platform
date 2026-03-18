@@ -1,0 +1,26 @@
+{
+  "name": "Baker's Algorithm",
+  "slug": "bakers-algorithm",
+  "category": "Memory Management",
+  "description": "A real-time incremental garbage collection algorithm designed for heap management in systems with strictly bounded pause times.",
+  "tags": [
+    "garbage-collection",
+    "memory-management",
+    "real-time",
+    "systems"
+  ],
+  "difficulty": "Hard",
+  "time_complexity": {
+    "best": "O(1)",
+    "average": "O(1)",
+    "worst": "O(n)"
+  },
+  "space_complexity": "O(n)",
+  "explanation": "## Overview\r\n**Baker's Algorithm** is an incremental \"copying\" garbage collector (GC) designed to solve the problem of long pause times in real-time systems. In traditional \"Stop-the-World\" collectors, the program freezes while memory is cleaned. Baker's algorithm instead interleaves collection work with the program's execution, ensuring that every memory allocation or access performs a small, bounded amount of GC work.\r\n\r\n## Intuition\r\nImagine you are moving houses, but you can't stop living your life while you do it. Instead of moving everything in one weekend, you move a few boxes every time you go from the old house to the new one. In Baker's algorithm, the heap is split into two halves: **From-space** (the old house) and **To-space** (the new house). Every time the program (the \"mutator\") reaches for an object in the old house, the algorithm immediately moves it to the new house before the program can touch it.\r\n\r\n\r\n\r\n## How It Works\r\nThe algorithm uses a **Tospace** divided by three pointers: `bottom`, `scan`, and `top`.\r\n\r\n1.  **Flip**: When Tospace is full, the roles of From-space and To-space are swapped. Root objects (directly accessible variables) are copied to the beginning of the new To-space.\r\n2.  **The Read Barrier**: This is the most critical part. Whenever the program tries to read a pointer to an object in From-space, the algorithm intercepts the move:\r\n    * It copies the object to To-space.\r\n    * It leaves a \"forwarding address\" in From-space so other pointers to the same object can find it.\r\n    * It returns the new address to the program.\r\n3.  **Incremental Scanning**: Every time the program allocates a new object, the collector moves a few more objects from the `scan` pointer to the `top` pointer.\r\n4.  **Completion**: Once the `scan` pointer catches up to the `top` pointer, all reachable objects have been moved and updated. The remaining objects in From-space are unreachable \"garbage\" and are cleared instantly.\r\n\r\n## Applications\r\n* **Real-Time Systems**: Used in environments like embedded systems where a 100ms pause could be catastrophic.\r\n* **Lisp/Smalltalk Runtimes**: Historically used in early symbolic processing machines.\r\n* **Functional Programming**: Efficient for languages that generate many short-lived objects.\r\n\r\n---",
+  "code": {
+    "cpp": "struct Object {\r\n    bool inToSpace;\r\n    Object* forwardingAddress;\r\n    // Data members...\r\n};\r\n\r\nObject* readBarrier(Object* obj) {\r\n    if (obj == nullptr) return nullptr;\r\n    \r\n    // If the object is still in the old space, move it\r\n    if (!obj->inToSpace) {\r\n        if (obj->forwardingAddress == nullptr) {\r\n            obj->forwardingAddress = copyToToSpace(obj);\r\n        }\r\n        return obj->forwardingAddress;\r\n    }\r\n    return obj;\r\n}",
+    "python": "class BakersGC:\r\n    def __init__(self, size):\r\n        self.from_space = [None] * size\r\n        self.to_space = [None] * size\r\n        self.scan_ptr = 0\r\n        self.top_ptr = 0\r\n\r\n    def read_barrier(self, obj_ref):\r\n        if obj_ref and obj_ref.space == \"from\":\r\n            return self.move_to_tospace(obj_ref)\r\n        return obj_ref\r\n\r\n    def allocate(self, size):\r\n        # Perform incremental scan work during allocation\r\n        self.incremental_scan()\r\n        # Logic to place object at top_ptr...",
+    "javascript": "class BakerCollector {\r\n    constructor() {\r\n        this.toSpace = new Set();\r\n        this.fromSpace = new Set();\r\n    }\r\n\r\n    // Intercept property access (simulating a read barrier)\r\n    readBarrier(object) {\r\n        if (this.fromSpace.has(object)) {\r\n            const moved = this.copy(object);\r\n            this.toSpace.add(moved);\r\n            this.fromSpace.delete(object);\r\n            return moved;\r\n        }\r\n        return object;\r\n    }\r\n}",
+    "java": "public class BakersAlgorithm {\r\n    class Ref {\r\n        Object target;\r\n        boolean isToSpace;\r\n    }\r\n\r\n    public Object access(Ref ref) {\r\n        // The Read Barrier: intercepting every access\r\n        if (ref != null && !ref.isToSpace) {\r\n            return moveToToSpace(ref);\r\n        }\r\n        return ref.target;\r\n    }\r\n\r\n    private Object moveToToSpace(Ref ref) {\r\n        // Copy logic and forwarding address update\r\n        return new Object(); \r\n    }\r\n}"
+  }
+}

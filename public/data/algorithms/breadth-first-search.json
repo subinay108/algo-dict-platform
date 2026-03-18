@@ -1,0 +1,27 @@
+{
+  "name": "Breadth-First Search (BFS)",
+  "slug": "breadth-first-search",
+  "category": "Graph Theory",
+  "description": "A graph traversal algorithm that explores all neighbor nodes at the present depth before moving to nodes at the next depth level.",
+  "tags": [
+    "graph",
+    "traversal",
+    "search",
+    "queue",
+    "connectivity"
+  ],
+  "difficulty": "Easy",
+  "time_complexity": {
+    "best": "O(V + E)",
+    "average": "O(V + E)",
+    "worst": "O(V + E)"
+  },
+  "space_complexity": "O(V)",
+  "explanation": "## Overview\r\n**Breadth-First Search (BFS)** is a fundamental algorithm for traversing or searching tree or graph data structures. It starts at a selected node (the 'source') and explores all of its neighbor nodes at the current depth prior to moving on to the nodes at the next depth level. It is the primary algorithm used to find the shortest path in an unweighted graph.\r\n\r\n## Intuition\r\nImagine dropping a stone into a still pond. The ripples expand outward in perfect circles, hitting everything at a distance of 1 foot, then everything at a distance of 2 feet, and so on. BFS works exactly like those ripples. It visits nodes in \"layers\" based on their distance from the starting point, ensuring that it never misses a closer node before venturing further away.\r\n\r\n\r\n\r\n## How It Works\r\n1.  **Initialize**: Create an empty **Queue** and a way to track **Visited** nodes (usually a boolean array or a set).\r\n2.  **Start**: Mark the source node as visited and enqueue it.\r\n3.  **Loop**: While the queue is not empty:\r\n    * Dequeue the front node `u`.\r\n    * For each neighbor `v` of `u`:\r\n        * If `v` has not been visited:\r\n            * Mark `v` as visited.\r\n            * Enqueue `v`.\r\n            * (Optional) Record `u` as the parent of `v` to reconstruct the path later.\r\n4.  **Completion**: The process continues until the queue is empty, meaning all reachable nodes have been visited.\r\n\r\n## Applications\r\n* **Shortest Path**: Finding the minimum number of edges between two nodes in an unweighted graph.\r\n* **Social Networking**: Finding \"friends of friends\" or degrees of separation.\r\n* **Web Crawlers**: Indexing web pages by following links layer by layer.\r\n* **Garbage Collection**: Identifying reachable objects in memory (Cheney's algorithm).\r\n\r\n---",
+  "code": {
+    "cpp": "#include <iostream>\r\n#include <vector>\r\n#include <queue>\r\n\r\nvoid bfs(int startNode, const std::vector<std::vector<int>>& adj) {\r\n    std::vector<bool> visited(adj.size(), false);\r\n    std::queue<int> q;\r\n\r\n    visited[startNode] = true;\r\n    q.push(startNode);\r\n\r\n    while (!q.empty()) {\r\n        int curr = q.front();\r\n        q.pop();\r\n        \r\n        for (int neighbor : adj[curr]) {\r\n            if (!visited[neighbor]) {\r\n                visited[neighbor] = true;\r\n                q.push(neighbor);\r\n            }\r\n        }\r\n    }\r\n}",
+    "python": "from collections import deque\r\n\r\ndef bfs(graph, start_node):\r\n    visited = {start_node}\r\n    queue = deque([start_node])\r\n\r\n    while queue:\r\n        vertex = queue.popleft()\r\n        \r\n        for neighbor in graph[vertex]:\r\n            if neighbor not in visited:\r\n                visited.add(neighbor)\r\n                queue.append(neighbor)",
+    "javascript": "function bfs(graph, startNode) {\r\n    const visited = new Set([startNode]);\r\n    const queue = [startNode];\r\n\r\n    while (queue.length > 0) {\r\n        const curr = queue.shift();\r\n\r\n        for (const neighbor of graph[curr]) {\r\n            if (!visited.has(neighbor)) {\r\n                visited.add(neighbor);\r\n                queue.push(neighbor);\r\n            }\r\n        }\r\n    }\r\n}",
+    "java": "import java.util.*;\r\n\r\npublic class BFS {\r\n    public void traverse(int start, List<List<Integer>> adj) {\r\n        boolean[] visited = new boolean[adj.size()];\r\n        Queue<Integer> queue = new LinkedList<>();\r\n\r\n        visited[start] = true;\r\n        queue.add(start);\r\n\r\n        while (!queue.isEmpty()) {\r\n            int curr = queue.poll();\r\n            for (int neighbor : adj.get(curr)) {\r\n                if (!visited[neighbor]) {\r\n                    visited[neighbor] = true;\r\n                    queue.add(neighbor);\r\n                }\r\n            }\r\n        }\r\n    }\r\n}"
+  }
+}

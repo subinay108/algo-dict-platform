@@ -1,0 +1,25 @@
+{
+  "name": "Longest Common Subsequence (LCS)",
+  "slug": "longest-common-subsequence",
+  "category": "Dynamic Programming",
+  "description": "An algorithm to find the longest sequence of characters that appear in the same relative order in two strings.",
+  "tags": [
+    "dynamic-programming",
+    "strings",
+    "optimization",
+    "bioinformatics"
+  ],
+  "difficulty": "Medium",
+  "time_complexity": {
+    "best": "O(m * n)",
+    "average": "O(m * n)",
+    "worst": "O(m * n)"
+  },
+  "space_complexity": "O(m * n)",
+  "explanation": "## Overview\r\nThe **Longest Common Subsequence (LCS)** problem is a classic challenge in computer science. Unlike a \"substring,\" a \"subsequence\" does not need to occupy consecutive positions within the original strings; it only needs to appear in the same relative order. For example, the LCS of \"ABCDE\" and \"ACE\" is \"ACE\" with a length of 3.\r\n\r\n## Intuition\r\nThe problem exhibits **overlapping subproblems** and **optimal substructure**. To find the LCS of two strings, we look at their last characters:\r\n1.  **Match**: If the last characters are the same, they must be part of the LCS. We add 1 to the result and solve for the remaining prefixes of both strings.\r\n2.  **Mismatch**: If they differ, the LCS could be formed by either dropping the last character of the first string OR dropping the last character of the second string. We take the maximum of these two possibilities.\r\n\r\n\r\n\r\n## How It Works\r\nWe use a 2D table `L[m+1][n+1]` to store the lengths of LCS for all possible prefixes.\r\n\r\n1.  **Initialize**: Create a table where `L[i][j]` represents the LCS length of `String1[0...i-1]` and `String2[0...j-1]`. Fill the first row and column with 0.\r\n2.  **Fill Table**: Iterate through the strings:\r\n    * If `S1[i-1] == S2[j-1]`: \r\n      ``L[i][j] = L[i-1][j-1] + 1``\r\n    * If `S1[i-1] != S2[j-1]`: \r\n      ``L[i][j] = \\max(L[i-1][j], L[i][j-1])``\r\n3.  **Result**: The value at `L[m][n]` is the length of the longest common subsequence.\r\n4.  **Backtrack**: To find the actual string, start from `L[m][n]` and move diagonally up-left when characters match, or move toward the larger adjacent value when they don't.\r\n\r\n\r\n\r\n## Applications\r\n* **Version Control**: Used in the `diff` command to compare file versions and identify changes.\r\n* **Bioinformatics**: Aligning DNA or protein sequences to find similarities between different organisms.\r\n* **Natural Language Processing**: Measuring the similarity between two sentences or documents.\r\n* **Data Compression**: Identifying repeated patterns across different data streams.\r\n\r\n---",
+  "code": {
+    "cpp": "#include <vector>\r\n#include <string>\r\n#include <algorithm>\r\n\r\nint lcs(std::string s1, std::string s2) {\r\n    int m = s1.size();\r\n    int n = s2.size();\r\n    std::vector<std::vector<int>> dp(m + 1, std::vector<int>(n + 1, 0));\r\n\r\n    for (int i = 1; i <= m; i++) {\r\n        for (int j = 1; j <= n; j++) {\r\n            if (s1[i - 1] == s2[j - 1])\r\n                dp[i][j] = dp[i - 1][j - 1] + 1;\r\n            else\r\n                dp[i][j] = std::max(dp[i - 1][j], dp[i][j - 1]);\r\n        }\r\n    }\r\n    return dp[m][n];\r\n}",
+    "python": "def lcs(s1, s2):\r\n    m, n = len(s1), len(s2)\r\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\r\n\r\n    for i in range(1, m + 1):\r\n        for j in range(1, n + 1):\r\n            if s1[i-1] == s2[j-1]:\r\n                dp[i][j] = dp[i-1][j-1] + 1\r\n            else:\r\n                dp[i][j] = max(dp[i-1][j], dp[i][j-1])\r\n                \r\n    return dp[m][n]",
+    "java": "public class LCS {\r\n    public static int findLCS(String s1, String s2) {\r\n        int m = s1.length();\r\n        int n = s2.length();\r\n        int[][] dp = new int[m + 1][n + 1];\r\n\r\n        for (int i = 1; i <= m; i++) {\r\n            for (int j = 1; j <= n; j++) {\r\n                if (s1.charAt(i - 1) == s2.charAt(j - 1))\r\n                    dp[i][j] = dp[i - 1][j - 1] + 1;\r\n                else\r\n                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);\r\n            }\r\n        }\r\n        return dp[m][n];\r\n    }\r\n}"
+  }
+}

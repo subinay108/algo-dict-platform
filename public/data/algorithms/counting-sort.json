@@ -1,0 +1,26 @@
+{
+  "name": "Counting Sort",
+  "slug": "counting-sort",
+  "category": "Sorting Algorithms",
+  "description": "A non-comparison-based sorting algorithm that sorts elements by counting the occurrences of each unique value.",
+  "tags": [
+    "sorting",
+    "non-comparison",
+    "integer-sort",
+    "linear-time"
+  ],
+  "difficulty": "Medium",
+  "time_complexity": {
+    "best": "O(n + k)",
+    "average": "O(n + k)",
+    "worst": "O(n + k)"
+  },
+  "space_complexity": "O(k)",
+  "explanation": "## Overview\r\n**Counting Sort** is a linear-time sorting algorithm that operates by counting the number of objects that have each distinct key value. Unlike comparison-based algorithms (like QuickSort or MergeSort), it never compares two elements. Instead, it uses the values of the elements themselves as indices into an array, making it incredibly fast when the range of input values (`k`) is not significantly larger than the number of elements (`n`).\r\n\r\n## Intuition\r\nImagine you have a crate of fruit: apples, oranges, and bananas. To sort them, you don't compare an apple to an orange. Instead, you set up three buckets. Every time you pick up an apple, you put it in the apple bucket and increment a counter. Once you've gone through the crate, you just empty the buckets in order. In computer science, we use an integer array as our \"buckets.\"\r\n\r\n\r\n\r\n## How It Works\r\n1.  **Find Range**: Identify the maximum value (`k`) in the input array to determine the size of the counting array.\r\n2.  **Count Frequencies**: Create a `count` array of size `k+1` initialized to zero. Iterate through the input array and increment `count[x]` for every element `x`.\r\n3.  **Cumulative Sum**: Transform the `count` array such that each element at index `i` stores the sum of previous counts. This indicates the actual position of the element in the output array.\r\n4.  **Build Output**: Iterate through the input array in reverse (to maintain **stability**), look up the position in the `count` array, place the element in the output array, and decrement the count.\r\n5.  **Copy**: Copy the sorted output array back to the original array.\r\n\r\n## Applications\r\n* **Subroutine for Radix Sort**: Used as a stable sorting backbone for sorting numbers with multiple digits.\r\n* **Discrete Finite Ranges**: Sorting exam scores (0–100), ages, or alphabet characters.\r\n* **Histogram Generation**: When the goal is to find frequency distributions rather than just sorting.\r\n\r\n---",
+  "code": {
+    "cpp": "#include <vector>\r\n#include <algorithm>\r\n\r\nvoid countingSort(std::vector<int>& arr) {\r\n    if (arr.empty()) return;\r\n    int maxVal = *std::max_element(arr.begin(), arr.end());\r\n    std::vector<int> count(maxVal + 1, 0);\r\n    std::vector<int> output(arr.size());\r\n\r\n    for (int x : arr) count[x]++;\r\n    for (int i = 1; i <= maxVal; i++) count[i] += count[i - 1];\r\n\r\n    for (int i = arr.size() - 1; i >= 0; i--) {\r\n        output[count[arr[i]] - 1] = arr[i];\r\n        count[arr[i]]--;\r\n    }\r\n    arr = output;\r\n}",
+    "python": "def counting_sort(arr):\r\n    if not arr: return arr\r\n    max_val = max(arr)\r\n    count = [0] * (max_val + 1)\r\n    output = [0] * len(arr)\r\n\r\n    for x in arr:\r\n        count[x] += 1\r\n    \r\n    for i in range(1, max_val + 1):\r\n        count[i] += count[i - 1]\r\n\r\n    for x in reversed(arr):\r\n        output[count[x] - 1] = x\r\n        count[x] -= 1\r\n        \r\n    return output",
+    "javascript": "function countingSort(arr) {\r\n    if (arr.length === 0) return arr;\r\n    const max = Math.max(...arr);\r\n    const count = new Array(max + 1).fill(0);\r\n    const output = new Array(arr.length);\r\n\r\n    arr.forEach(x => count[x]++);\r\n    for (let i = 1; i <= max; i++) count[i] += count[i - 1];\r\n\r\n    for (let i = arr.length - 1; i >= 0; i--) {\r\n        output[count[arr[i]] - 1] = arr[i];\r\n        count[arr[i]]--;\r\n    }\r\n    return output;\r\n}",
+    "java": "public class CountingSort {\r\n    public static void sort(int[] arr) {\r\n        int n = arr.length;\r\n        if (n == 0) return;\r\n        int max = arr[0];\r\n        for (int i = 1; i < n; i++) if (arr[i] > max) max = arr[i];\r\n\r\n        int[] count = new int[max + 1];\r\n        for (int x : arr) count[x]++;\r\n        for (int i = 1; i <= max; i++) count[i] += count[i - 1];\r\n\r\n        int[] output = new int[n];\r\n        for (int i = n - 1; i >= 0; i--) {\r\n            output[count[arr[i]] - 1] = arr[i];\r\n            count[arr[i]]--;\r\n        }\r\n        System.arraycopy(output, 0, arr, 0, n);\r\n    }\r\n}"
+  }
+}
