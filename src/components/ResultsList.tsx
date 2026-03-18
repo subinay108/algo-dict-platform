@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Pagination from './Pagination';
 
 export type Result = {
   id: string;
@@ -33,6 +34,11 @@ const ResultsList: React.FC<Props> = ({ items, pageSize = 4 }) => {
 
   const go = (p: number) => setPage(Math.min(pages, Math.max(1, p)));
 
+  // Reset page when the items or pageSize change (e.g. new search results)
+  useEffect(() => {
+    setPage(1);
+  }, [items, pageSize]);
+
   return (
     <div className="w-full max-w-3xl mt-12">
       <div className="flex items-center justify-between mb-3">
@@ -59,16 +65,7 @@ const ResultsList: React.FC<Props> = ({ items, pageSize = 4 }) => {
         )}
       </div>
 
-      <div className="flex items-center justify-center gap-2 mt-4">
-        <button onClick={() => go(page - 1)} className="px-3 py-1 rounded hover:bg-primary/20 text-sm text-warm-gray/60 disabled:opacity-40" disabled={page === 1}>Prev</button>
-        {Array.from({ length: pages }).map((_, i) => {
-          const p = i + 1;
-          return (
-            <button key={p} onClick={() => go(p)} className={`px-3 py-1 rounded text-sm ${p === page ? 'bg-primary text-slate-900' : 'hover:bg-primary/10 text-warm-gray/60'}`}>{p}</button>
-          );
-        })}
-        <button onClick={() => go(page + 1)} className="px-3 py-1 rounded hover:bg-primary/20 text-sm text-warm-gray/60" disabled={page === pages}>Next</button>
-      </div>
+      <Pagination pages={pages} page={page} onPageChange={go} siblingCount={1} />
     </div>
   );
 };
